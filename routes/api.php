@@ -26,4 +26,5 @@ Route::group(['middleware' => 'jwt', 'prefix' => 'auth'], function () {
 Route::group(['middleware' => 'jwt', 'prefix' => 'generic'], function () {
     Route::get('/app-status', 'Controller@getAppStatus');
 });
+Route::get('/banners', 'Controller@getBanners');
 
