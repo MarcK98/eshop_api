@@ -40,9 +40,15 @@ class Controller extends BaseController
         }
 
     }
-    public function getBanners(){
-        $banners=DB::table('banners')->select('image','text','url')->get();
-        $products=DB::table('products')->select('name','price','shop_id')->get();
-        return response()->json(['banners' => $banners , 'products'=> $products]);
-        }
+
+
+    public function getHomepage()
+    {
+        $result = DB::select(DB::raw('(select image, text, url from banner where active = 1 and deleted_at IS NULL),
+        (select name, price, shop_id from products)
+        '))->get();
+        $banners = DB::table('banners')->select('image', 'text', 'url')->get();
+        $products = DB::table('products')->select('name', 'price', 'shop_id')->get();
+        return response()->json(['banners' => $banners, 'products' => $products]);
+    }
 }
